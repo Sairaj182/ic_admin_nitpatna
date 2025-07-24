@@ -8,24 +8,30 @@ This project is a *Node.js Express backend* for IC-NITP Admin, using *Sequelize 
 
 
 Backend/
+.
 ├── config/
-│   └── db.js                  # Sequelize initialization
+│   └── db.js                 # Database connection and Sequelize initialization
 ├── controllers/
-│   └── galleryController.js   # Gallery controller
-├── middlewares/
-├── models/
-│   ├── Admin.js
-│   ├── events.js
+│   └── authController.js     # Handles authentication-related logic
+├── middleware/
+│   └── authMiddleware.js     # Middleware for authentication checks
+├── models/                   # Defines database schemas (Sequelize models)
 │   ├── gallery.js
+│   ├── incubation.js
 │   ├── notice.js
-│   └── index.js               # Model aggregator
-├── routes/
+│   ├── talk.js
+│   └── user.js
+├── node_modules/             # Contains all installed Node.js packages and dependencies
+├── routes/                   # Defines API endpoints and links them to controllers
 │   ├── authRoutes.js
-│   └── galleryRoutes.js
-├── .env                        # Environment variables
-├── app.js                      # Entry point
-├── package.json
-└── server.js                   # (if applicable)
+│   ├── galleryRoutes.js
+│   ├── incubationRoutes.js
+│   ├── noticeRoutes.js
+│   └── talkRoutes.js
+├── .env                      # Environment variables for configuration (e.g., database credentials, ports)
+├── app.js                    # Main application entry point, sets up Express, middleware, and routes
+├── package-lock.json         # Records the exact dependency tree used in the project
+└── package.json              # Defines project metadata and lists all dependencies
 
 
 ---
