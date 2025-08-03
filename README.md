@@ -29,7 +29,8 @@ Backend/
 │   ├── noticeRoutes.js
 │   └── talkRoutes.js
 ├── .env                      # Environment variables for configuration (e.g., database credentials, ports)
-├── app.js                    # Main application entry point, sets up Express, middleware, and routes
+├── app.js 
+|---initAdmin.js
 ├── package-lock.json         # Records the exact dependency tree used in the project
 └── package.json              # Defines project metadata and lists all dependencies
 

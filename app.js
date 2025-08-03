@@ -11,7 +11,9 @@ const eventRoutes = require('./EventModule/eventRoutes');
 
 // const incubationRoutes = require('./routes/incubationRoutes');
 
-dotenv.config();
+require('dotenv').config();
+
+const createAdminUser = require('./initAdmin');
 
 const app = express();
 app.use(cors());
@@ -32,6 +34,7 @@ app.get('/', (req, res) => {
 
 sequelize.sync().then(() => {
     app.listen(process.env.PORT || 5000, () => {
-        console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
+         console.log(`🚀 Server running on port ${process.env.PORT}`);
     });
 });
+
