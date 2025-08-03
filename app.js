@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
+const dotenv = require('dotenv');
+const {sequelize} = require('./db');
+const authRoutes = require('./authRoutes');
 // const galleryRoutes = require('./routes/galleryRoutes');
 // const talkRoutes = require('./routes/talkRoutes');
-// const noticeRoutes = require('./routes/noticeRoutes');
+
+const noticeRoutes = require('./NoticeModule/noticeRoutes');
+const eventRoutes = require('./EventModule/eventRoutes');
+
 // const incubationRoutes = require('./routes/incubationRoutes');
 
 require('dotenv').config();
@@ -18,7 +22,10 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 // app.use('/api/gallery', galleryRoutes);
 // app.use('/api/talks', talkRoutes);
-// app.use('/api/notices', noticeRoutes);
+
+app.use('/api', noticeRoutes);
+app.use('/api', eventRoutes);
+
 // app.use('/api/incubations', incubationRoutes);
 
 app.get('/', (req, res) => {
