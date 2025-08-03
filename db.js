@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
@@ -16,4 +16,12 @@ sequelize.authenticate()
     .then(() => console.log('✅ Database connected'))
     .catch(err => console.error('❌ Database connection error:', err));
 
-module.exports = sequelize;
+
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.Event = require('./EventModule/event')(sequelize, DataTypes);
+
+module.exports = db;
+module.exports.sequelize = sequelize;
