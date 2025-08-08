@@ -14,7 +14,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://incubation-8kdm.onrender.com', 
+  origin: 'https://incubation-center-nit-patna.vercel.app/', 
   credentials: true
 }));
 
@@ -42,5 +42,6 @@ sequelize.sync().then(() => {
 }).catch(err => {
   console.error('❌ Database sync failed:', err);
 });
+
 
 
