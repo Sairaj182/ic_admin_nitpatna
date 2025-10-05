@@ -1,0 +1,16 @@
+# Ignore environment and sensitive files
+.env
+.env.local
+.env.production
+.env.development
+
+# Ignore node dependencies
+node_modules/
+
+# Ignore OS/system files
+.DS_Store
+Thumbs.db
+
+# Ignore build outputs
+/dist
+/build

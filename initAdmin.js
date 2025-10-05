@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const User = require('./models/user');
+const User = require('./user');
 
 async function createAdminUser() {
   const adminEmail = process.env.ADMIN_EMAIL;
@@ -11,13 +11,13 @@ async function createAdminUser() {
   }
 
   try {
-    const existingAdmin = await User.findOne({ where: { username: adminEmail } });
+    const existingAdmin = await User.findOne({ where: { email: adminEmail } });
 
     if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
       await User.create({
-        username: adminEmail,
+        email: adminEmail,
         password: hashedPassword
       });
 
