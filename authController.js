@@ -1,6 +1,7 @@
-const User = require('../models/user');
+const User = require('./user');
 
 const loginUser = async (req, res) => {
+  console.log("Received login data:", req.body); //testing
   const { email, password } = req.body;
 
   try {
