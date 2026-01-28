@@ -14,3 +14,6 @@ Thumbs.db
 # Ignore build outputs
 /dist
 /build
+
+# Used for taking notes and other random stuff
+scratchpad.txt
