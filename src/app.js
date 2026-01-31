@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use('/api', routes);
 
-app.get('/',(req, res)=>{
+app.use('/',(req, res)=>{
     res.json({
         status: 'ok',
         message: 'IC backend running',
