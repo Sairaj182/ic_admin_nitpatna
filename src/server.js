@@ -1,6 +1,6 @@
 const { sequelize } = require('./config/db');
 const env = require('./config/env');
-const createAdmin = require('./init/initAdmin');
+const createAdmin = require('./init/initSuperAdmin');
 const app = require('./app');
 
 sequelize.sync().then(async () => {

@@ -8,6 +8,10 @@ class UserRepository {
     async create(userData) {
         return await User.create(userData);
     }
+
+    async getAll() {
+        return await User.findAll({ attributes: ['id', 'email', 'role'] });
+    }
 }
 
 module.exports = new UserRepository();

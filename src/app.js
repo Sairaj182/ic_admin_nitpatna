@@ -3,7 +3,7 @@ const cors = require('cors');
 const env = require('./config/env');
 const routes = require('./routes');
 const errorHandler = require('./middleware/error.middleware');
-
+const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cors({ 
         origin: env.ALLOWED_ORIGINS, 
@@ -11,10 +11,10 @@ app.use(cors({
     })
 );
 app.use(express.json());
-
+app.use(cookieParser());
 app.use('/api', routes);
 
-app.get('/',(req, res)=>{
+app.use('/',(req, res)=>{
     res.json({
         status: 'ok',
         message: 'IC backend running',
