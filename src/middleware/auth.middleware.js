@@ -14,6 +14,9 @@ exports.protect = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (err) {
-        res.status(403).json({ message: 'Invalid token' });
+        if(err.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Token expired' });
+        }
+        return res.status(403).json({ message: 'Unauthorized' });
     }
 };

@@ -21,6 +21,10 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('ADMIN','SUPER_ADMIN'),
         allowNull: false,
         defaultValue: 'ADMIN',
+    },
+    refreshToken: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 
@@ -31,6 +35,10 @@ User.beforeCreate(async (user)=>{
 
 User.prototype.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
+}
+
+User.prototype.matchRefreshToken = async function (enteredRefreshToken) {
+    return await bcrypt.compare(enteredRefreshToken, this.refreshToken);
 }
 
 module.exports = User;

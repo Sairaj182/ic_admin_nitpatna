@@ -1,9 +1,21 @@
 const authService = require('../services/auth.service');
+const env = require('../config/env');
 
 exports.login = async (req, res, next) => {
     try{
         const result = await authService.login(req.body);
-        res.status(200).json({message: 'Login successful', ...result});
+        res.cookie('refreshToken', result.refreshToken, env.COOKIE_OPTIONS);
+        res.status(200).json({message: 'Login successful', accessToken: result.accessToken});
+    }catch(err){
+        next(err);
+    }
+};
+
+exports.refreshToken = async (req, res, next) => {
+    try{
+        const refreshToken = req.cookies.refreshToken;
+        const result = await authService.refreshToken({refreshToken});
+        res.status(200).json({message: 'Token refreshed successfully', accessToken: result.accessToken});
     }catch(err){
         next(err);
     }
