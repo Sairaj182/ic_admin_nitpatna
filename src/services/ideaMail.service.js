@@ -1,11 +1,11 @@
 const ideaMailRepo = require('../repositories/ideaMail.repository');
-
+const AppError = require('../errors/AppError.js');
 class IdeaMailService {
-    async create({name, email, subject, message}){
-        if (!name || !email || !subject || !message){
-            throw new Error('All fields required');
+    async create({name, email, subject, message, phone}){
+        if (!name || !email || !subject || !message || !phone){
+            throw new AppError('All fields required',400);
         }    
-        return await ideaMailRepo.create({name, email, subject, message});
+        return await ideaMailRepo.create({name, email, subject, message, phone});
     }
 
     async getAll(limit, offset){

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const userRepo = require('../repositories/user.repository');
 const env = require('../config/env');
 const bcrypt = require('bcryptjs');
+const AppError = require('../errors/AppError.js');
 
 const generateAccessToken = (user) => {
     return jwt.sign(
@@ -22,10 +23,10 @@ const generateRefreshToken = (user) => {
 class AuthService {
     async login({email, password}) {
         const user = await userRepo.findByEmail(email);
-        if (!user) throw new Error('User not found or invalid credentials');
+        if (!user) throw new AppError('Invalid credentials', 401);
 
         const isMatch = await user.matchPassword(password);
-        if (!isMatch) throw new Error('User not found or invalid credentials');
+        if (!isMatch) throw new AppError('Invalid credentials', 401);
 
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
@@ -35,25 +36,19 @@ class AuthService {
     }
 
     async refreshToken({refreshToken}) {
-        if(!refreshToken) throw new Error('Refresh token is required');
-        // console.log('RAW REFRESH TOKEN →', refreshToken);
+        if(!refreshToken) throw new AppError('Refresh token is required', 401);
         const payload = jwt.verify(refreshToken, env.JWT_REFRESH_SECRET);
-        // console.log('JWT PAYLOAD →', payload);
-        if(!payload) throw new Error('Invalid or expired refresh token');
         const user = await userRepo.findByEmail(payload.email);
-        // console.log('USER FOUND →', !!user);
-        // console.log('DB HASH →', user.refreshToken);
-        if(!user) throw new Error('User not found');
+        if(!user || !refreshToken) throw new AppError('Invalid or expired refresh token', 401);
         const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
-        if(!isMatch) throw new Error('Invalid or expired refresh token');
-        // console.log('BCRYPT MATCH →', isMatch);
+        if(!isMatch) throw new AppError('Invalid or expired refresh token',401);
         const accessToken = generateAccessToken(user);
         return { accessToken };
     }
 
     async register({email, password, role}) {
         const existing = await userRepo.findByEmail(email);
-        if (existing) throw new Error('User already exists');
+        if (existing) throw new AppError('User already exists', 409);
         const user = await userRepo.create({email, password, role: role || 'ADMIN'});
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);

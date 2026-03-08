@@ -17,11 +17,11 @@ const Event = sequelize.define('Event', {
     },
     date: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
     },
     time: {
         type: DataTypes.TIME,
-        allowNull: false
+        allowNull: true
     }
 });
 

@@ -1,30 +1,24 @@
 const jwt = require('jsonwebtoken');
 const env = require('../config/env');
 const User = require('../models/user.model');
+const AppError = require('../errors/AppError');
 
 exports.protect = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        throw new AppError('Unauthorized', 401);
     }
-    
-    try {
-        const token = authHeader.split(' ')[1];
-        const decoded = jwt.verify(token, env.JWT_SECRET);
-        const user = await User.findByPk(decoded.id);
-        if(!user){
-            return res.status(401).json({message: 'Unauthorized'});
-        }
-        if(decoded.tokenVersion !== user.tokenVersion){
-            return res.status(401).json({ message: 'Session Expired. Please login again. '});
-        }
-        req.user = decoded;
-        next();
-    } catch (err) {
-        if(err.name === 'TokenExpiredError') {
-            return res.status(401).json({ message: 'Token expired' });
-        }
-        return res.status(403).json({ message: 'Unauthorized' });
+
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, env.JWT_SECRET);
+    const user = await User.findByPk(decoded.id);
+    if(!user){
+        throw new AppError('Unauthorized', 401);
     }
+    if(decoded.tokenVersion !== user.tokenVersion){
+        throw new AppError('Session expired. Please login again.', 401);
+    }
+    req.user = decoded;
+    next();
 };
