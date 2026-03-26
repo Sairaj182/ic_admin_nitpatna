@@ -5,6 +5,10 @@ const routes = require('./routes');
 const errorHandler = require('./middleware/error.middleware');
 const cookieParser = require('cookie-parser');
 const app = express();
+app.use(cors({
+  origin: env.ALLOWED_ORIGINS,
+  credentials: true
+}));
 app.use(cors({ 
         origin: env.ALLOWED_ORIGINS, 
         credentials: true 

@@ -7,7 +7,7 @@ const { createEventSchema } = require('../validators/event.validator');
 const router = express.Router();
 
 router.get('/', getAllEvents);
-router.post('/createEvent', protect, authorize(['ADMIN', 'SUPER_ADMIN']), validate(createEventSchema), createEvent);
-router.delete('/:id', deleteEvent);
+router.post('/', protect, authorize(['ADMIN', 'SUPER_ADMIN']), validate(createEventSchema), createEvent);
+router.delete('/:id', protect, authorize(['ADMIN', 'SUPER_ADMIN']), deleteEvent);
 
 module.exports = router;

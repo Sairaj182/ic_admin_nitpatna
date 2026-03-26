@@ -1,10 +1,11 @@
+const { sync } = require('touch');
 const {sequelize} = require('../config/db');
-const Event = require('../models/event.model');
-const IdeaMail = require('../models/ideaMail.model');
-const Notice = require('../models/notice.model');
-const User = require('../models/user.model');
+require('../models/event.model');
+require('../models/ideaMail.model');
+require('../models/notice.model');
+require('../models/user.model');
 
-async function syncAllTables() {
+exports.syncAllTables = async () => {
     try {
         await sequelize.sync({ force: true });
         
@@ -15,4 +16,3 @@ async function syncAllTables() {
         process.exit(1);
     }
 }
-syncAllTables();

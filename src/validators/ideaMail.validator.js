@@ -8,5 +8,5 @@ exports.createIdeaMailSchema = z.object({
         .max(100),
   subject: z.string().min(1).max(50),
   message: z.string().min(1).max(1000),
-  phone: z.number().int().min(1000000000).max(9999999999)
+  phone: z.string().min(10).max(10)
 });

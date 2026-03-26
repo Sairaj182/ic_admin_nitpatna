@@ -2,7 +2,7 @@ const Event = require('../models/event.model');
 
 class EventRepository {
     async findAll() {
-        return await Event.findAll({order: [['date','ASC'],['time','ASC']]});
+        return await Event.findAll({order: [['date','ASC'],['createdAt','ASC']]});
     }
     async create(data) {
         return await Event.create(data);

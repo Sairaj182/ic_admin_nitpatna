@@ -19,10 +19,10 @@ const Event = sequelize.define('Event', {
         type: DataTypes.DATEONLY,
         allowNull: true
     },
-    time: {
-        type: DataTypes.TIME,
-        allowNull: true
-    }
+    // time: {
+    //     type: DataTypes.TIME,
+    //     allowNull: true
+    // }
 });
 
 module.exports = Event;

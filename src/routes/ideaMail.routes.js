@@ -7,6 +7,6 @@ const {validate} = require('../middleware/validate.middleware');
 const router = express.Router();
 
 router.get('/', getIdeaMails);
-router.post('/', protect, authorize(['ADMIN', 'SUPER_ADMIN']), validate(createIdeaMailSchema), createIdeaMail);
+router.post('/', validate(createIdeaMailSchema), createIdeaMail);
 
 module.exports = router;

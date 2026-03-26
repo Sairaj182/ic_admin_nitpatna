@@ -4,7 +4,7 @@ const env = require('../config/env');
 exports.login = async (req, res, next) => {
     const result = await authService.login(req.body);
     res.cookie('refreshToken', result.refreshToken, env.COOKIE_OPTIONS);
-    res.status(200).json({success: true, message: 'Login successful', accessToken: result.accessToken});
+    res.status(200).json({success: true, message: 'Login successful', accessToken: result.accessToken, role: result.role});
 };
 
 exports.refreshToken = async (req, res, next) => {
